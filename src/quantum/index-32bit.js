@@ -13,6 +13,7 @@ import GraphContainer from '../components/graph-container';
 import CONFIG from './config';
 import TargetStatus from './target-status';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
+import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex32 extends React.Component {
   constructor(props) {
@@ -58,19 +59,29 @@ export default class QuantumIndex32 extends React.Component {
           <Countdown />, <TargetStatus notes={notes} />]],
       },
       {
-        cssRowExtraClasses: 'generic-metrics-graphics speedometer-metrics-graphics',
-        title: '#1 Speedometer v2',
+        title: '#1 Perfherder (Lower is always better)',
         rows: [
           [
-            <Perfherder
-              title='Talos: Speedometer mozilla-central'
-              key='talos-speedometer'
-              reference='2017-10-12'
-              signatures={{
-                'win7-32': '78730407dee56521f26d3621fa8156914b83025a',
-                'win7-32-new': '5457539d78e242701e37dc114d79ff47b0fe4baa',
-              }}
-              {...notes.talos_speedometer}
+            <PerfherderGraphContainer
+              title='Speedometer'
+              series={[
+                {
+                  label: 'Firefox',
+                  frameworkId: 10,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-firefox',
+                },
+                {
+                  label: 'Chrome',
+                  frameworkId: 10,
+                  platform: 'windows7-32-nightly',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-chrome',
+                },
+              ]}
             />,
           ],
         ],

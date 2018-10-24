@@ -5,6 +5,8 @@ const getPerfherderData = async (series, timeRange) => {
     const data = await Promise.all(series
         .map(async (config) => {
             const seriesData = await queryPerformanceData(config, timeRange);
+            console.log(config);
+            console.log(seriesData);
             const seriesDatum = (Object.values(seriesData)).pop();
             return {
                 ...seriesDatum,
